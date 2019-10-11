@@ -1,4 +1,4 @@
-// // Plugin that implements a simple and scalable weapon system developed by Neuron Station
+// Copyright 2019 Neuron Station. All Rights Reserved.
 
 #include "NWPProjectileMovementComponent.h"
 

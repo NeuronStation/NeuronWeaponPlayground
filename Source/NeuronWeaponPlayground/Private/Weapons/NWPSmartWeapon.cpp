@@ -1,4 +1,4 @@
-// // Plugin that implements a simple and scalable weapon system developed by Neuron Station
+// Copyright 2019 Neuron Station. All Rights Reserved.
 
 #include "NWPSmartWeapon.h"
 
@@ -119,7 +119,7 @@ void ANWPSmartWeapon::UpdateTargets()
 	TArray<AActor*> TargetsToRemoveFromCache;
 
 	// Evaluate rendered actors
-	// TODO: [NWP-REVIEW] Potentially, in a real case you will iterate through ACharacter / APawn
+	// TODO: [NWP-REVIEW] ANWPTarget should be a component and not an actor due to potential deadly diamond of death problems
 	for (TObjectIterator<class ANWPTarget> It; It; ++It)
 	{
 		if (It->GetWorld() == World)
