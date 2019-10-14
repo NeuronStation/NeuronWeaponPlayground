@@ -15,7 +15,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-ANWPWeapon::ANWPWeapon(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+ANWPWeapon::ANWPWeapon(const class FObjectInitializer& ObjectInitializer) : 
+	Super(ObjectInitializer),
+	CurrentWeaponConfig(nullptr),
+	CurrentWeaponState(ENWPWeaponState::Invalid),
+	CurrentCoolDown(0.0f),
+	CurrentAmmo(0),
+	CurrentAmmoInMagazine(0),
+	WeaponStateBeforeReload(ENWPWeaponState::Invalid)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -26,14 +33,6 @@ ANWPWeapon::ANWPWeapon(const class FObjectInitializer& ObjectInitializer) : Supe
 	FirstPersonGun->CastShadow = false;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
 	FirstPersonGun->SetupAttachment(RootComponent);
-
-	// Initialize members
-	CurrentWeaponConfig = nullptr;
-	CurrentWeaponState = ENWPWeaponState::Invalid;
-	CurrentCoolDown = 0.0f;
-	CurrentAmmo = 0;
-	CurrentAmmoInMagazine = 0;
-	WeaponStateBeforeReload = ENWPWeaponState::Invalid;
 }
 
 ///////////////////////////////////////////////////////////////////////////

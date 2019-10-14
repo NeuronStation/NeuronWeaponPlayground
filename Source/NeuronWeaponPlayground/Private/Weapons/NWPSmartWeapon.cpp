@@ -17,11 +17,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-ANWPSmartWeapon::ANWPSmartWeapon(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+ANWPSmartWeapon::ANWPSmartWeapon(const class FObjectInitializer& ObjectInitializer) : 
+	Super(ObjectInitializer),
+	TargetAreaBeginPosition(FVector2D::ZeroVector),
+	TargetArea(FVector2D::ZeroVector),
+	CurrentUpdateProjectilesTime(0.0f)
 {
-	TargetAreaBeginPosition = FVector2D::ZeroVector;
-	TargetArea = FVector2D::ZeroVector;
-	CurrentUpdateProjectilesTime = 0.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////

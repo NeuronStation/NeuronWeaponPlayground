@@ -18,11 +18,6 @@ class NEURONWEAPONPLAYGROUND_API ANWPHUD : public AHUD
 {
 	GENERATED_BODY()
 
-// Constructors
-public:
-
-	ANWPHUD();
-
 // Member functions
 public:
 

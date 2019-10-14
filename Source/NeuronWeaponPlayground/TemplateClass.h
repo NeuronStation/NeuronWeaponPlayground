@@ -82,6 +82,9 @@ private:
 - A blank line should appear at the end of each .h or .cpp file.
 - The specifier auto is allowed to be used when iterating on a collection (TArray, TMap, TSet...).
 - Everything declared in the .h must have at least one line of description.
+- Floats will always have integer part, fractional part and an f at the end (Example: 1.0f, 0.1f...).
+- The initialization of the member variables will be done using the initialization list. 
+  If for any reason this mechanism cannot be used, the variables will be initialized by means of constructor instructions or in the .h in that order.
 - If the comment is a line, // will be used. If you have more than one line, /** * / (without the space) will be used. If it is a type (class, struct...) description,
   the second indicated syntax will be used.
 - If the comment is a line, no dot will be used unless it is a type (class, struct...) description. These last ones always end with a dot.
@@ -122,7 +125,7 @@ private:
   For example, you can add the word "Current" to the member variable and nothing to the local variable: CurrentIndex (member variable) - Index (local variable).
 
 # Event / Delegates:
-#####################
+####################
 - Basic concepts to avoid confusions:
 	- Events: Do not confuse with event delegates. Member functions which have the FunctionSpecifier BlueprintNativeEvent or BlueprintImplementableEvent.
 	- Delegates: Data types or variables that reference and execute member functions on C++ objects. For more information: https://docs.unrealengine.com/en-US/Programming/UnrealArchitecture/Delegates/index.html.

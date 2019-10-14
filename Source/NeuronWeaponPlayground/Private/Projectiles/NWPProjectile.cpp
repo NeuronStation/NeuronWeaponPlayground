@@ -16,7 +16,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer) : 
+	Super(ObjectInitializer),
+	TracerComponent(nullptr),
+	ImpulseStrenghtFactor(10.0f)
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
@@ -41,10 +44,6 @@ ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
-
-	// Initialize some values
-	TracerComponent = nullptr;
-	ImpulseStrenghtFactor = 10.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////

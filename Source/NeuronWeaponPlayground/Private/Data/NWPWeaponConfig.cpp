@@ -10,26 +10,28 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-UNWPWeaponConfig::UNWPWeaponConfig(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UNWPWeaponConfig::UNWPWeaponConfig(const class FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer),
+	InitialAmmo(30),
+	MaximumAmmo(100),
+	AmmoPerMagazine(30),
+	MagazineReloadTime(0.5f),
+	ShootDistance(10000.0f),
+	bUseProjectileAsAmmo(false),
+	bUseEyesAsShootOrigin(true),
+	MuzzleSocketName(TEXT("")),
+	EyesOffsetLocation(FVector::ZeroVector),
+	EyesOffsetRotation(FRotator::ZeroRotator),
+	MuzzleBoneOffsetLocation(FVector::ZeroVector),
+	MuzzleBoneOffsetRotation(FRotator::ZeroRotator),
+	OnCurrentLoadFinishedDelegate(nullptr),
+	bIsLoading(false),
+	CachedWeaponMesh(nullptr),
+	CachedMuzzleEffect(nullptr),
+	CachedShootSound(nullptr),
+	CachedShootingMontage(nullptr),
+	CachedReloadingMontage(nullptr)
 {
-	OnCurrentLoadFinishedDelegate = nullptr;
-	bIsLoading = false;
-	CachedWeaponMesh = nullptr;
-	CachedMuzzleEffect = nullptr;
-	CachedShootSound = nullptr;
-	CachedShootingMontage = nullptr;
-	InitialAmmo = 30;
-	MaximumAmmo = 100;
-	AmmoPerMagazine = 30;
-	MagazineReloadTime = 0.5;
-	ShootDistance = 10000.0f;
-	bUseProjectileAsAmmo = false;
-	bUseEyesAsShootOrigin = true;
-	MuzzleSocketName = TEXT("");
-	EyesOffsetLocation = FVector::ZeroVector;
-	EyesOffsetRotation = FRotator::ZeroRotator;
-	MuzzleBoneOffsetLocation = FVector::ZeroVector;
-	MuzzleBoneOffsetRotation = FRotator::ZeroRotator;
 }
 
 ///////////////////////////////////////////////////////////////////////////

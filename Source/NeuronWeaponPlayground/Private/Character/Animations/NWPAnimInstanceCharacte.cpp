@@ -11,12 +11,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-UNWPAnimInstanceCharacter::UNWPAnimInstanceCharacter(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UNWPAnimInstanceCharacter::UNWPAnimInstanceCharacter(const class FObjectInitializer& ObjectInitializer) : 
+	Super(ObjectInitializer),
+	OwnerCharacter(nullptr),
+	CurrentAnimationMontage(nullptr),
+	bIsBusy(false),
+	CurrentWeaponState(ENWPWeaponState::Invalid)
 {
-	OwnerCharacter = nullptr;
-	CurrentAnimationMontage = nullptr;
-	bIsBusy = false;
-	CurrentWeaponState = ENWPWeaponState::Invalid;
 }
 
 ///////////////////////////////////////////////////////////////////////////
