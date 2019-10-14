@@ -1,9 +1,14 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPProjectileMovementComponent.h"
 
 // NWP
 #include "NWPProjectile.h"
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 FVector UNWPProjectileMovementComponent::ComputeVelocity(FVector InitialVelocity, float DeltaTime) const
 {

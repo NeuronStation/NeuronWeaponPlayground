@@ -1,10 +1,15 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPAnimInstanceCharacter.h"
 
 // NWP
 #include "NeuronTestCharacter.h"
 #include "NWPWeapon.h"
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 UNWPAnimInstanceCharacter::UNWPAnimInstanceCharacter(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -14,6 +19,10 @@ UNWPAnimInstanceCharacter::UNWPAnimInstanceCharacter(const class FObjectInitiali
 	CurrentWeaponState = ENWPWeaponState::Invalid;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void UNWPAnimInstanceCharacter::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
@@ -21,6 +30,10 @@ void UNWPAnimInstanceCharacter::NativeInitializeAnimation()
 	// Cache the owning pawn for use in Tick
 	OwnerCharacter = Cast<ANeuronTestCharacter>(TryGetPawnOwner());
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void UNWPAnimInstanceCharacter::NativeUpdateAnimation(float DeltaTime)
 {
@@ -36,6 +49,10 @@ void UNWPAnimInstanceCharacter::NativeUpdateAnimation(float DeltaTime)
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void UNWPAnimInstanceCharacter::PlayActionMontage(class UAnimMontage* MontageToPlay, float _PlayRate)
 {

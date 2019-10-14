@@ -1,12 +1,18 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPWeaponConfig.h"
 
+// NWP
 #include "NeuronWeaponPlayground.h"
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 UNWPWeaponConfig::UNWPWeaponConfig(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	CurrentLoadFinishedDelegate = nullptr;
+	OnCurrentLoadFinishedDelegate = nullptr;
 	bIsLoading = false;
 	CachedWeaponMesh = nullptr;
 	CachedMuzzleEffect = nullptr;
@@ -26,6 +32,10 @@ UNWPWeaponConfig::UNWPWeaponConfig(const class FObjectInitializer& ObjectInitial
 	MuzzleBoneOffsetRotation = FRotator::ZeroRotator;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 ENWPWeaponCadenceType UNWPWeaponConfig::GetCadenceType() const
 {
 	// Check if the weapon is automatic or semi automatic
@@ -41,7 +51,11 @@ ENWPWeaponCadenceType UNWPWeaponConfig::GetCadenceType() const
 	return ENWPWeaponCadenceType::COUNT;
 }
 
-void UNWPWeaponConfig::LoadWeaponConfig(bool bSyncLoad, const FNWPOnWaponConfigLoaded& _Callback)
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+void UNWPWeaponConfig::LoadWeaponConfig(bool bSyncLoad, const FNWPOnWeaponConfigLoadedDelegate& _Callback)
 {
 	// Check if there is a load in progress
 	if (bIsLoading)
@@ -53,7 +67,7 @@ void UNWPWeaponConfig::LoadWeaponConfig(bool bSyncLoad, const FNWPOnWaponConfigL
 	if (_Callback.IsBound())
 	{
 		// Bind the function to the delegate
-		CurrentLoadFinishedDelegate = _Callback;
+		OnCurrentLoadFinishedDelegate = _Callback;
 	}
 
 	// Mark the loading flag
@@ -98,12 +112,20 @@ void UNWPWeaponConfig::LoadWeaponConfig(bool bSyncLoad, const FNWPOnWaponConfigL
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void UNWPWeaponConfig::ReleaseWeaponConfig()
 {
 	// Release the hard references
 	CachedWeaponMesh = nullptr;
 	CachedShootingMontage = nullptr;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void UNWPWeaponConfig::FinishWeaponConfigLoad()
 {
@@ -123,9 +145,9 @@ void UNWPWeaponConfig::FinishWeaponConfigLoad()
 	bIsLoading = false;
 
 	// Execute callback
-	if (CurrentLoadFinishedDelegate.IsBound())
+	if (OnCurrentLoadFinishedDelegate.IsBound())
 	{
-		CurrentLoadFinishedDelegate.ExecuteIfBound();
-		CurrentLoadFinishedDelegate = nullptr;
+		OnCurrentLoadFinishedDelegate.ExecuteIfBound();
+		OnCurrentLoadFinishedDelegate = nullptr;
 	}
 }

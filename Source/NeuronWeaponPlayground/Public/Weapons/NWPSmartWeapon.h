@@ -5,11 +5,14 @@
 // NWP
 #include "NWPSmartWeaponConfig.h"
 
+// Generated
 #include "CoreMinimal.h"
 #include "Weapons/NWPWeapon.h"
 #include "NWPSmartWeapon.generated.h"
 
-// Struct that contains information of a smart controlled projectile
+/**
+ * Struct that contains information of a smart controlled projectile.
+ */
 USTRUCT()
 struct FNWPSmartProjectileData
 {
@@ -88,7 +91,7 @@ protected:
 };
 
 /**
- * Weapon that can launch projectiles that can follow a target and avoid some obstacles. Can be configured using UNWPSmartWeaponConfig
+ * Weapon that can launch projectiles that can follow a target and avoid some obstacles. Can be configured using UNWPSmartWeaponConfig.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API ANWPSmartWeapon : public ANWPWeapon
@@ -104,7 +107,7 @@ public:
 public:
 
 	/// AActor interface begin
-	// Function called every frame on this Actor. 
+	// Function called every frame on this Actor
 	virtual void Tick(float DeltaSeconds) override;
 	/// AActor interface end
 

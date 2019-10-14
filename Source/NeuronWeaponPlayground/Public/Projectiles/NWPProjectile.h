@@ -5,13 +5,14 @@
 // NWP
 #include "NWPProjectileMovementComponent.h"
 
+// Generated
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "NWPProjectile.generated.h"
 
 /**
- * Projectile that can be launched by a weapon
- * TODO: [NWP-REVIEW] Consider if it is necessary to have a UNWPProjectileConfig
+ * Projectile that can be launched by a weapon.
+ * TODO: [NWP-REVIEW] Consider if it is necessary to have a UNWPProjectileConfig.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API ANWPProjectile : public AActor

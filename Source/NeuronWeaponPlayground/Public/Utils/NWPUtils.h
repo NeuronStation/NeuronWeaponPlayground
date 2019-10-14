@@ -2,12 +2,13 @@
 
 #pragma once
 
+// Generated
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "NWPUtils.generated.h"
 
 /**
- * A set of useful functions
+ * A set of useful functions.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API UNWPUtils : public UObject
@@ -17,7 +18,7 @@ class NEURONWEAPONPLAYGROUND_API UNWPUtils : public UObject
 // Member functions
 public:
 
-	// This function retrieves the name for a given enum value.
+	// This function retrieves the name for a given enum value
 	template <typename T>
 	static FString GetEnumName(const TCHAR* EnumName, const T EnumValue)
 	{

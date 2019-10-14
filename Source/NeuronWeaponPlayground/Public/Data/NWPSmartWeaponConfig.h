@@ -2,12 +2,14 @@
 
 #pragma once
 
+
+// Generated
 #include "CoreMinimal.h"
 #include "Data/NWPWeaponConfig.h"
 #include "NWPSmartWeaponConfig.generated.h"
 
 /**
- * Configuration for the smart weapon
+ * Configuration for the smart weapon.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API UNWPSmartWeaponConfig : public UNWPWeaponConfig

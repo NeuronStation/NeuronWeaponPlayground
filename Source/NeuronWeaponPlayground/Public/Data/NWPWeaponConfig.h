@@ -2,24 +2,23 @@
 
 #pragma once
 
+// NWP
+#include "NeuronWeaponPlayground.h"
+
 // UE
 #include "Engine/SkeletalMesh.h"
 #include "Particles/ParticleSystem.h"
 
-// NWP
-#include "NeuronWeaponPlayground.h"
-
+// Generated
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "NWPWeaponConfig.generated.h"
 
-// Events / Delegates
-
-// Delegate for action end
-DECLARE_DELEGATE(FNWPOnWaponConfigLoaded)
+// Delegates
+DECLARE_DELEGATE(FNWPOnWeaponConfigLoadedDelegate)
 
 /**
- * Configuration for a weapon
+ * Configuration for a weapon.
  */
 UCLASS(Abstract, Blueprintable, BlueprintType)
 class NEURONWEAPONPLAYGROUND_API UNWPWeaponConfig : public UObject
@@ -111,7 +110,7 @@ public:
 
 	// Loads the weapon config synchronously
 	// TODO: [NWP-REVIEW] Make this load asynchronously
-	void LoadWeaponConfig(bool bSyncLoad = true, const FNWPOnWaponConfigLoaded& _Callback = nullptr);
+	void LoadWeaponConfig(bool bSyncLoad = true, const FNWPOnWeaponConfigLoadedDelegate& _Callback = nullptr);
 
 	// Releases the asset hard references
 	void ReleaseWeaponConfig();
@@ -208,7 +207,7 @@ protected:
 	// Load / Unload
 
 	// Delegate for the load finish
-	FNWPOnWaponConfigLoaded CurrentLoadFinishedDelegate;
+	FNWPOnWeaponConfigLoadedDelegate OnCurrentLoadFinishedDelegate;
 
 	// Indicates that the weapon config is being loaded
 	bool bIsLoading;

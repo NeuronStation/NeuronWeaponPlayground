@@ -5,13 +5,14 @@
 // NWP
 #include "NeuronWeaponPlayground.h"
 
+// Generated
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "NWPAnimInstanceCharacter.generated.h"
 
 /**
  * Animation controller of the character. Reads Gameplay variables that are going to be used by the AnimGraph.
- * Plays animation montages on the character
+ * Plays animation montages on the character.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API UNWPAnimInstanceCharacter : public UAnimInstance

@@ -1,5 +1,6 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPHUD.h"
 
 // UE
@@ -15,9 +16,17 @@
 #include "NWPSmartWeaponConfig.h"
 #include "NWPUtils.h"
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 ANWPHUD::ANWPHUD()
 {
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPHUD::DrawHUD()
 {
@@ -94,6 +103,10 @@ void ANWPHUD::DrawHUD()
 	DrawLine((Canvas->ClipX * 0.5f) - 20.0f, Canvas->ClipY * 0.5f, (Canvas->ClipX * 0.5f) + 20.0f, Canvas->ClipY * 0.5f, FLinearColor::Red);
 	DrawLine(Canvas->ClipX * 0.5f, (Canvas->ClipY * 0.5f) - 20.0f, Canvas->ClipX * 0.5f, (Canvas->ClipY * 0.5f) + 20.0f, FLinearColor::Red);
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPHUD::DrawEmptyRect(FLinearColor RectColor, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float LineThickness, float OffsetX, float OffsetY)
 {

@@ -7,12 +7,13 @@
 #include "NWPWeaponConfig.h"
 #include "NWPProjectile.h"
 
+// Generated
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "NWPWeapon.generated.h"
 
 /**
- * Basic class for a weapon. It can shoot & reload. It has support for ammo (including projectiles). Can be configured using UNWPWeaponConfig
+ * Basic class for a weapon. It can shoot & reload. It has support for ammo (including projectiles). Can be configured using UNWPWeaponConfig.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API ANWPWeapon : public AActor
@@ -31,10 +32,10 @@ public:
 public:
 
 	/// AActor interface begin
-	// Overridable native event for when play begins for this actor.
+	// Overridable native event for when play begins for this actor
 	virtual void BeginPlay() override;
 	
-	// Function called every frame on this Actor. 
+	// Function called every frame on this Actor
 	virtual void Tick(float DeltaSeconds) override;
 	/// AActor interface end
 

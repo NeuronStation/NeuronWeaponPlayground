@@ -2,15 +2,16 @@
 
 #pragma once
 
+// Generated
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "NWPHUD.generated.h"
 
 /**
- * Player's HUD. Shows information about the current equipped weapon 
+ * Player's HUD. Shows information about the current equipped weapon.
  *
  * TODO: [NWP-REVIEW] The target system is dependent from resolution. It should not be like that because players with lower resolutions will
- * have a bigger target area. That will be a disadvantage for players with higher resolutions. It has not been solved due to lack of time
+ * have a bigger target area. That will be a disadvantage for players with higher resolutions. It has not been solved due to lack of time.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API ANWPHUD : public AHUD

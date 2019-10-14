@@ -1,5 +1,6 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPSmartWeapon.h"
 
 // UE
@@ -12,12 +13,20 @@
 #include "NWPTarget.h"
 #include "NWPUtils.h"
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 ANWPSmartWeapon::ANWPSmartWeapon(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	TargetAreaBeginPosition = FVector2D::ZeroVector;
 	TargetArea = FVector2D::ZeroVector;
 	CurrentUpdateProjectilesTime = 0.0f;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPSmartWeapon::Tick(float DeltaSeconds)
 {
@@ -32,6 +41,10 @@ void ANWPSmartWeapon::Tick(float DeltaSeconds)
 	UpdateSmartProjectiles(DeltaSeconds);
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPSmartWeapon::OnWeaponLoaded()
 {
 	Super::OnWeaponLoaded();
@@ -40,10 +53,18 @@ void ANWPSmartWeapon::OnWeaponLoaded()
 	CalculateViewportTargetPositions();
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 bool ANWPSmartWeapon::HasTargetToShoot()
 {
 	return CurrentTargets.Num() != 0;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 const AActor* ANWPSmartWeapon::GetTargetToShoot()
 {
@@ -74,6 +95,10 @@ const AActor* ANWPSmartWeapon::GetTargetToShoot()
 
 	return CurrentTargets[SelectedTargetIndex];
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPSmartWeapon::CalculateViewportTargetPositions()
 {
@@ -111,6 +136,10 @@ void ANWPSmartWeapon::CalculateViewportTargetPositions()
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPSmartWeapon::UpdateTargets()
 {
@@ -150,6 +179,10 @@ void ANWPSmartWeapon::UpdateTargets()
 	TargetsToRemoveFromCache.Empty();
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 bool ANWPSmartWeapon::IsActorInsideTargetArea(class AActor* ActorToEvaluate)
 {
 	APlayerController* OwnerPlayerController = Cast<APlayerController>(OwnerCharacter->GetController());
@@ -161,6 +194,10 @@ bool ANWPSmartWeapon::IsActorInsideTargetArea(class AActor* ActorToEvaluate)
 	return (TargetScreenLocation.X > TargetAreaBeginPosition.X  && TargetScreenLocation.X < TargetAreaBeginPosition.X + TargetArea.X) &&
 		(TargetScreenLocation.Y > TargetAreaBeginPosition.Y && TargetScreenLocation.Y < TargetAreaBeginPosition.Y + TargetArea.Y);
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPSmartWeapon::SpawProjectile()
 {
@@ -182,6 +219,10 @@ void ANWPSmartWeapon::SpawProjectile()
 		SmartProjectiles.Add(CurrentSpawnedProjectiles[CurrentSpawnedProjectiles.Num() - 1], FNWPSmartProjectileData(GetTargetToShoot()));
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 FVector ANWPSmartWeapon::GetAvoidObstaclePoint(class ANWPProjectile* _ProjectileToProcess, class AActor* TargetObstacle)
 {
@@ -280,6 +321,10 @@ void ANWPSmartWeapon::UpdateSmartProjectiles(float DeltaTime)
 	CurrentUpdateProjectilesTime = FMath::Max(0.0f, --CurrentUpdateProjectilesTime);
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPSmartWeapon::UpdateSmartProjectile(ANWPProjectile* _ProjectileToProcess, float DeltaTime)
 {
 	const UNWPSmartWeaponConfig* SmartWeaponConfig = GetSmartWeaponConfig();
@@ -353,6 +398,10 @@ void ANWPSmartWeapon::UpdateSmartProjectile(ANWPProjectile* _ProjectileToProcess
 	SmartProjectiles[_ProjectileToProcess] = SmartProjectileData;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPSmartWeapon::OnProjectileVelocityComputed(ANWPProjectile* _ProjectileToProcess, FVector& _ComputedVelocity, float DeltaTime)
 {
 	const UNWPSmartWeaponConfig* SmartWeaponConfig = GetSmartWeaponConfig();
@@ -403,6 +452,10 @@ void ANWPSmartWeapon::OnProjectileVelocityComputed(ANWPProjectile* _ProjectileTo
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPSmartWeapon::OnProjectileHit(class ANWPProjectile* _ProjectileToProcess, class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, 
 	FVector NormalImpulse, const FHitResult& Hit)
 {
@@ -421,6 +474,10 @@ void ANWPSmartWeapon::OnProjectileHit(class ANWPProjectile* _ProjectileToProcess
 	// Apply the smart projectile data to the map
 	SmartProjectiles[_ProjectileToProcess] = SmartProjectileData;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPSmartWeapon::OnProjectileIsGoingToBeDestroyed(ANWPProjectile* _ProjectileToProcess)
 {

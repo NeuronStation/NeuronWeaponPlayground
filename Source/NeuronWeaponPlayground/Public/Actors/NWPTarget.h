@@ -2,12 +2,13 @@
 
 #pragma once
 
+// Generated
 #include "CoreMinimal.h"
 #include "Engine/StaticMeshActor.h"
 #include "NWPTarget.generated.h"
 
 /**
- * Actor that represents the target that the smart weapon projectiles can follow
+ * Actor that represents the target that the smart weapon projectiles can follow.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API ANWPTarget : public AStaticMeshActor

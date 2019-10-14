@@ -1,5 +1,6 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
+// Class
 #include "NWPProjectile.h"
 
 // UE
@@ -10,6 +11,10 @@
 // NWP
 #include "NWPWeapon.h"
 #include "NWPProjectileMovementComponent.h"
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -42,6 +47,10 @@ ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer
 	ImpulseStrenghtFactor = 10.0f;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPProjectile::BeginPlay()
 {
 	Super::BeginPlay();
@@ -59,10 +68,18 @@ void ANWPProjectile::BeginPlay()
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPProjectile::SetOwnerWeapon(class ANWPWeapon* _NewOwnerWeapon)
 {
 	OwnerWeapon = _NewOwnerWeapon;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPProjectile::OnHit(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
@@ -101,6 +118,10 @@ void ANWPProjectile::OnHit(class UPrimitiveComponent* HitComp, class AActor* Oth
 	// Destroy the projectile
 	Destroy();
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
 
 void ANWPProjectile::OnProjectileVelocityComputed(FVector& _ComputedVelocity, float DeltaTime)
 {
