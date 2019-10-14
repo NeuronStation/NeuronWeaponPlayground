@@ -16,3 +16,14 @@ ANeuronTestGameMode::ANeuronTestGameMode()
 	// use our custom HUD class
 	HUDClass = ANWPHUD::StaticClass();
 }
+
+void ANeuronTestGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	ObjectRegistry = NewObject<UNWPObjectRegistry>(this);
+	ObjectRegistry->RegisterObject<ANeuronTestGameMode>(this);
+
+
+	const TArray<ANeuronTestGameMode*>& List = ObjectRegistry->GetRegisteredObjects<ANeuronTestGameMode>();
+}

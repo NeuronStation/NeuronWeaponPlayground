@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ObjectRegistry.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "NeuronTestGameMode.generated.h"
@@ -11,8 +13,14 @@ class ANeuronTestGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
+protected:
+
+	virtual void BeginPlay() override;
+
 public:
 	ANeuronTestGameMode();
+
+	UNWPObjectRegistry* ObjectRegistry;
 };
 
 
