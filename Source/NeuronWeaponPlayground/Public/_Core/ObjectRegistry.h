@@ -10,14 +10,14 @@
 struct ObjectEntry
 {
 	UClass* ObjectClass;
+
+	TArray<UObject*> ObjectList;
 };
 
 template <typename T>
 struct TemplateObjectEntry : ObjectEntry
 {
 	TArray<T> CastObjectList;
-
-	TArray<UObject*> ObjectList;
 };
 
 /**
@@ -30,6 +30,9 @@ class NEURONWEAPONPLAYGROUND_API UNWPObjectRegistry : public UObject
 	
 // Member functions
 public:
+
+	///////////////////////////////////////////////////////////////////////////
+	// Registry life cycle
 
 	template <typename T>
 	FORCEINLINE void RegisterObject(UObject* _ObjectToRegister)
@@ -57,14 +60,15 @@ public:
 
 	//void UnregisterObject(UObject* _ObjectToUnregister);
 
+	///////////////////////////////////////////////////////////////////////////
+	// Get Objects - Casted
+
 	template <class T>
 	const TArray<T*>& GetRegisteredObjects(UClass* _RegisteredClass) const
 	{
-		UClass* ObjectClass = _RegisteredClass;
-
-		if (ClassNameObjectEntryMap.Contains(ObjectClass->GetFName()))
+		if (ClassNameObjectEntryMap.Contains(_RegisteredClass->GetFName()))
 		{
-			TemplateObjectEntry<T*>* ObjectEntry = static_cast<TemplateObjectEntry<T*>*>(ClassNameObjectEntryMap[ObjectClass->GetFName()]);
+			TemplateObjectEntry<T*>* ObjectEntry = static_cast<TemplateObjectEntry<T*>*>(ClassNameObjectEntryMap[_RegisteredClass->GetFName()]);
 			return ObjectEntry->CastObjectList;
 		}
 
@@ -74,15 +78,54 @@ public:
 	}
 
 	template <class T>
+	TArray<T*> GetRegisteredObjectsCopy(UClass* _RegisteredClass) const
+	{
+		return GetRegisteredObjects<T>(_RegisteredClass);
+	}
+
+	template <class T>
 	const TArray<T*>& GetRegisteredObjects() const
 	{
 		return GetRegisteredObjects<T>(T::StaticClass());
 	}
 
-	//template <class T>
-	//TArray<UObject*> GetRegisteredObjectList<T>() const;
+	template <class T>
+	TArray<T*> GetRegisteredObjectsCopy() const
+	{
+		return GetRegisteredObjects<T>();
+	}
 
-	//TArray<UObject*> GetRegisteredObjectList(UClass* _RegisteredClass) const;
+	///////////////////////////////////////////////////////////////////////////
+	// Get Objects - As Objects
+
+	const TArray<UObject*>& GetRegisteredObjectsAsObjects(UClass* _RegisteredClass) const
+	{
+		if (ClassNameObjectEntryMap.Contains(_RegisteredClass->GetFName()))
+		{
+			return ClassNameObjectEntryMap[_RegisteredClass->GetFName()]->ObjectList;
+		}
+
+		static const TArray<UObject*> DummyList;
+
+		return DummyList;
+	}
+
+	TArray<UObject*> GetRegisteredObjectsAsObjectsCopy(UClass* _RegisteredClass) const
+	{
+		return GetRegisteredObjectsAsObjects(_RegisteredClass);
+	}
+
+	template <class T>
+	const TArray<UObject*>& GetRegisteredObjectsAsObjects() const
+	{
+		GetRegisteredObjectsAsObjects(T::StaticClass());
+	}
+
+	template <class T>
+	TArray<UObject*> GetRegisteredObjectsAsObjectsCopy() const
+	{
+		return GetRegisteredObjectsAsObjects<T>();
+	}
 
 // Member variables
 protected:
