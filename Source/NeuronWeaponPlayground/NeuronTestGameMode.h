@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "ObjectRegistry.h"
-
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "NeuronTestGameMode.generated.h"
@@ -20,7 +18,7 @@ protected:
 public:
 	ANeuronTestGameMode();
 
-	UNWPObjectRegistry* ObjectRegistry;
+	class UNWPObjectRegistry* ObjectRegistry;
 };
 
 

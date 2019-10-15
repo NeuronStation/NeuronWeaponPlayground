@@ -1,7 +1,7 @@
 // Copyright 2019 Neuron Station. All Rights Reserved.
 
 // Class
-#include "ObjectRegistry.h"
+#include "NWPObjectRegistry.h"
 
 DEFINE_LOG_CATEGORY(LogNWPObjectRegistry);
 

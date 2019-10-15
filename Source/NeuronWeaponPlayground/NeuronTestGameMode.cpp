@@ -1,6 +1,7 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
 #include "NeuronTestGameMode.h"
+#include "NWPObjectRegistry.h"
 #include "NWPHUD.h"
 #include "NeuronTestCharacter.h"
 #include "UObject/ConstructorHelpers.h"

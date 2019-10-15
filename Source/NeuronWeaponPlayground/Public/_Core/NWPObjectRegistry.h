@@ -8,7 +8,7 @@
 // Generated
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "ObjectRegistry.generated.h"
+#include "NWPObjectRegistry.generated.h"
 
 // Types
 DECLARE_LOG_CATEGORY_EXTERN(LogNWPObjectRegistry, Log, All);
