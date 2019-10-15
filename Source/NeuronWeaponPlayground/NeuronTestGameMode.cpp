@@ -23,15 +23,16 @@ void ANeuronTestGameMode::BeginPlay()
 
 	ObjectRegistry = NewObject<UNWPObjectRegistry>(this);
 	ObjectRegistry->RegisterObject<ANeuronTestGameMode>(this);
+	ObjectRegistry->RegisterObject<ANeuronTestGameMode>(this);
+	ObjectRegistry->RegisterObject<ANeuronTestGameMode>(this);
 
-	const TArray<UObject*>& ListSeven = ObjectRegistry->GetRegisteredObjectsAsObjects<ANeuronTestGameMode>();
+	const TArray<ANeuronTestGameMode*>& ListOne = ObjectRegistry->GetRegisteredObjects<ANeuronTestGameMode>();
+	TArray<ANeuronTestGameMode*> ListTwo = ObjectRegistry->GetRegisteredObjectsCopy<ANeuronTestGameMode>();
 
-	const TArray<ANeuronTestGameMode*>& ListOne = ObjectRegistry->GetRegisteredObjects<ANeuronTestGameMode>(ANeuronTestGameMode::StaticClass());
-	TArray<ANeuronTestGameMode*> ListTwo = ObjectRegistry->GetRegisteredObjectsCopy<ANeuronTestGameMode>(ANeuronTestGameMode::StaticClass());
-	const TArray<ANeuronTestGameMode*>& ListThree = ObjectRegistry->GetRegisteredObjects<ANeuronTestGameMode>();
-	TArray<ANeuronTestGameMode*> ListFour = ObjectRegistry->GetRegisteredObjectsCopy<ANeuronTestGameMode>();
+	const TArray<UObject*>& ListThree = ObjectRegistry->GetRegisteredObjectsAsObjects(ANeuronTestGameMode::StaticClass());
+	TArray<UObject*> ListFour = ObjectRegistry->GetRegisteredObjectsAsObjectsCopy(ANeuronTestGameMode::StaticClass());
+	const TArray<UObject*>& ListFive = ObjectRegistry->GetRegisteredObjectsAsObjects<ANeuronTestGameMode>();
+	TArray<UObject*> ListSix = ObjectRegistry->GetRegisteredObjectsAsObjectsCopy<ANeuronTestGameMode>();
 
-	const TArray<UObject*>& ListFive = ObjectRegistry->GetRegisteredObjectsAsObjects(ANeuronTestGameMode::StaticClass());
-	TArray<UObject*> ListSix = ObjectRegistry->GetRegisteredObjectsAsObjectsCopy(ANeuronTestGameMode::StaticClass());
-	TArray<UObject*> ListEight = ObjectRegistry->GetRegisteredObjectsAsObjectsCopy<ANeuronTestGameMode>();
+	ObjectRegistry->UnregisterObject(this);
 }
