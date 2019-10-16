@@ -160,59 +160,72 @@ public:
 	///////////////////////////////////////////////////////////////////////////
 	// Registry life cycle
 
-	// Registers an object to the object registry. Note: The class passed to the function as template must be the same as the one passed in _ObjectToRegister
+	// Registers an object to the object registry. Note: The class passed to the function as template must be the same or a child as the one passed in _ObjectToRegister
 	template <typename T>
 	void RegisterObject(UObject* _ObjectToRegister)
 	{
+		UClass* StaticObjectClass = T::StaticClass();
+		check(StaticObjectClass);
 		UClass* ObjectClass = _ObjectToRegister->GetClass();
 		check(ObjectClass);
 
-		// Check if the class passed to the function as template is the same as the one passed in _ObjectToRegister (potential inconsistency)
-		if (!ensure(ObjectClass == T::StaticClass()))
+		// Check if the class passed to the function as template is the same or a child as the one passed in _ObjectToRegister (potential inconsistency)
+		if (!ensure(ObjectClass == StaticObjectClass || ObjectClass->IsChildOf(StaticObjectClass)))
 		{
-			V_LOG(LogNWPObjectRegistry, Warning, TEXT("Inconsistency found! The class passed to the function as template must be the same as the "
+			V_LOG(LogNWPObjectRegistry, Warning, TEXT("Inconsistency found! The class passed to the function as template must be the same or a child as the "
 				"one passed in _ObjectToRegister"));
 			return;
 		}
 
 		// Create the object entry if it does not exist
-		if (!ClassNameObjectEntryMap.Contains(ObjectClass->GetFName()))
+		if (!ClassNameObjectEntryMap.Contains(StaticObjectClass->GetFName()))
 		{
 			TemplateObjectEntry<T*>* CurrentObjectEntry = new TemplateObjectEntry<T*>();
-			ClassNameObjectEntryMap.Emplace(ObjectClass->GetFName(), TUniquePtr<ObjectEntry>(CurrentObjectEntry));
+			ClassNameObjectEntryMap.Emplace(StaticObjectClass->GetFName(), TUniquePtr<ObjectEntry>(CurrentObjectEntry));
 		}
 
 		// Add the object to the object entry
-		ObjectEntry* CurrentObjectEntry = ClassNameObjectEntryMap[ObjectClass->GetFName()].Get();
+		ObjectEntry* CurrentObjectEntry = ClassNameObjectEntryMap[StaticObjectClass->GetFName()].Get();
 		check(CurrentObjectEntry);
-		bool bObjectSuccessfullyAdded = CurrentObjectEntry->AddObject(ObjectClass, _ObjectToRegister);
+		bool bObjectSuccessfullyAdded = CurrentObjectEntry->AddObject(StaticObjectClass, _ObjectToRegister);
 
 		// Broadcast the event delegate if the object was added successfully
 		if (bObjectSuccessfullyAdded)
 		{
-			OnObjectRegisteredEventDelegate.Broadcast(ObjectClass, _ObjectToRegister);
+			OnObjectRegisteredEventDelegate.Broadcast(StaticObjectClass, _ObjectToRegister);
 		}
 	}
 
 	// Unregisters an object from the object registry
+	template <typename T>
 	void UnregisterObject(UObject* _ObjectToUnregister)
 	{
+		UClass* StaticObjectClass = T::StaticClass();
+		check(StaticObjectClass);
 		UClass* ObjectClass = _ObjectToUnregister->GetClass();
 		check(ObjectClass);
 		ObjectEntry* CurrentObjectEntry = nullptr;
 
-		// Remove the object from the object entry if it exists
-		if (ClassNameObjectEntryMap.Contains(ObjectClass->GetFName()))
+		// Check if the class passed to the function as template is the same or a child as the one passed in _ObjectToUnregister (potential inconsistency)
+		if (!ensure(ObjectClass == StaticObjectClass || ObjectClass->IsChildOf(StaticObjectClass)))
 		{
-			CurrentObjectEntry = ClassNameObjectEntryMap[ObjectClass->GetFName()].Get();
+			V_LOG(LogNWPObjectRegistry, Warning, TEXT("Inconsistency found! The class passed to the function as template must be the same or a child as the "
+				"one passed in _ObjectToRegister"));
+			return;
+		}
+
+		// Remove the object from the object entry if it exists
+		if (ClassNameObjectEntryMap.Contains(StaticObjectClass->GetFName()))
+		{
+			CurrentObjectEntry = ClassNameObjectEntryMap[StaticObjectClass->GetFName()].Get();
 			CurrentObjectEntry->RemoveObject(_ObjectToUnregister);
-			OnObjectUnregisteredEventDelegate.Broadcast(ObjectClass, _ObjectToUnregister);
+			OnObjectUnregisteredEventDelegate.Broadcast(StaticObjectClass, _ObjectToUnregister);
 		}
 
 		// Remove the object entry if it exists and if the object list is empty
 		if (CurrentObjectEntry && CurrentObjectEntry->GetObjectCount() == 0)
 		{
-			ClassNameObjectEntryMap.Remove(ObjectClass->GetFName());
+			ClassNameObjectEntryMap.Remove(StaticObjectClass->GetFName());
 		}
 	}
 

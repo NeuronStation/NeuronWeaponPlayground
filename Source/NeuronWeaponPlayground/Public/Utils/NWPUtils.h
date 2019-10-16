@@ -28,4 +28,22 @@ public:
 		const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, EnumName, true);
 		return EnumPtr ? EnumPtr->GetNameStringByValue(static_cast<int64>(EnumValue)) : FString(TEXT("Invalid"));
 	}
+
+	// This function retrieves the atomic C++ class give a class
+	static UClass* GetAtomicCppClass(UClass* Class)
+	{
+		// Loop the class/super class and check if it has been compiled from blueprint
+		while (Class)
+		{
+			if (!Class->HasAnyClassFlags(CLASS_CompiledFromBlueprint))
+			{
+				return Class;
+			}
+
+			Class = Class->GetSuperClass();
+		}
+
+		checkNoEntry();
+		return nullptr;
+	}
 };
