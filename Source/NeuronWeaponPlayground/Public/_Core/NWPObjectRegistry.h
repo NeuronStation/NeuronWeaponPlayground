@@ -13,6 +13,10 @@
 // Types
 DECLARE_LOG_CATEGORY_EXTERN(LogNWPObjectRegistry, Log, All);
 
+// Delegates
+DECLARE_EVENT_TwoParams(UNWPObjectRegistry, FOnObjectRegisteredEventDelegate, UClass*, UObject*);
+DECLARE_EVENT_TwoParams(UNWPObjectRegistry, FOnObjectUnregisteredEventDelegate, UClass*, UObject*);
+
 /**
  * Class that associates class names with object lists and manages them. 
  *
@@ -59,14 +63,18 @@ protected:
 			const TArray<UObject*>& GetObjectList() { return ObjectList; }
 
 			// Adds an object to the object list
-			virtual void AddObject(UClass* _ObjetClass, UObject* _ObjectToAdd)
+			virtual bool AddObject(UClass* _ObjetClass, UObject* _ObjectToAdd)
 			{
 				if (!ObjectListNames.Contains(_ObjectToAdd->GetFName()))
 				{
 					ObjectClass = _ObjetClass;
 					ObjectListNames.Add(_ObjectToAdd->GetFName());
 					ObjectList.Add(_ObjectToAdd);
+
+					return true;
 				}
+
+				return false;
 			}
 
 			// Removes an object from the object list
@@ -105,11 +113,13 @@ protected:
 			const TArray<T>& GetCastObjectList() { return CastObjectList; }
 
 			/// ObjectEntry interface begin
-			virtual void AddObject(UClass* _ObjetClass, UObject* _ObjectToAdd)
+			virtual bool AddObject(UClass* _ObjetClass, UObject* _ObjectToAdd)
 			{
-				BaseType::AddObject(_ObjetClass, _ObjectToAdd);
+				bool bObjectSuccessfullyAdded = BaseType::AddObject(_ObjetClass, _ObjectToAdd);
 
 				CastObjectList.Add(static_cast<T>(_ObjectToAdd));
+
+				return bObjectSuccessfullyAdded;
 			}
 
 			virtual void RemoveObject(UObject* _ObjectToRemove) override
@@ -126,6 +136,23 @@ protected:
 			// List of objects currently registered. In this list the objects are stored cast to their most atomic type
 			TArray<T> CastObjectList;
 	};
+
+// Events / Delegates
+public:
+
+	// Returns a reference to the object registered event delegate
+	FOnObjectRegisteredEventDelegate& OnObjectRegistered() { return OnObjectRegisteredEventDelegate; }
+
+	// Returns a reference to the object unregistered event delegate
+	FOnObjectUnregisteredEventDelegate& OnObjectUnregistered() { return OnObjectUnregisteredEventDelegate; }
+
+protected:
+
+	// Event delegate called when an object is registered
+	FOnObjectRegisteredEventDelegate OnObjectRegisteredEventDelegate;
+
+	// Event delegate called when an object is unregistered
+	FOnObjectUnregisteredEventDelegate OnObjectUnregisteredEventDelegate;
 	
 // Member functions
 public:
@@ -158,7 +185,13 @@ public:
 		// Add the object to the object entry
 		ObjectEntry* CurrentObjectEntry = ClassNameObjectEntryMap[ObjectClass->GetFName()].Get();
 		check(CurrentObjectEntry);
-		CurrentObjectEntry->AddObject(ObjectClass, _ObjectToRegister);
+		bool bObjectSuccessfullyAdded = CurrentObjectEntry->AddObject(ObjectClass, _ObjectToRegister);
+
+		// Broadcast the event delegate if the object was added successfully
+		if (bObjectSuccessfullyAdded)
+		{
+			OnObjectRegisteredEventDelegate.Broadcast(ObjectClass, _ObjectToRegister);
+		}
 	}
 
 	// Unregisters an object from the object registry
@@ -173,6 +206,7 @@ public:
 		{
 			CurrentObjectEntry = ClassNameObjectEntryMap[ObjectClass->GetFName()].Get();
 			CurrentObjectEntry->RemoveObject(_ObjectToUnregister);
+			OnObjectUnregisteredEventDelegate.Broadcast(ObjectClass, _ObjectToUnregister);
 		}
 
 		// Remove the object entry if it exists and if the object list is empty

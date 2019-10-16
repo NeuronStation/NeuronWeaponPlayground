@@ -135,7 +135,7 @@ private:
 - Event declaration naming example:
 	On{EventName}{CustomSuffix} (BlueprintNativeEvent or BlueprintImplementableEvent should appear obove the function declaration as a FunctionSpecifier)
 - Delegate type declaration naming example:
-	F{ProjectPrefix}On{DelegateName}{CustomSuffix}
+	FOn{DelegateName}{CustomSuffix}
 - Delegate variable declaration naming example:
 	On{DelegateName}{CustomSuffix}
 - The "CustomSuffix" depends on whether it is an event or the type of delegate:
