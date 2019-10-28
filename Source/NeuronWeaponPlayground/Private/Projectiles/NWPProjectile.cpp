@@ -18,8 +18,13 @@
 
 ANWPProjectile::ANWPProjectile(const class FObjectInitializer& ObjectInitializer) : 
 	Super(ObjectInitializer),
+	ImpactEffect(nullptr),
+	TracerEffect(nullptr),
+	ImpulseStrenghtFactor(10.0f),
+	CollisionComp(nullptr),
+	ProjectileMovement(nullptr),
 	TracerComponent(nullptr),
-	ImpulseStrenghtFactor(10.0f)
+	OwnerWeapon(nullptr)
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));

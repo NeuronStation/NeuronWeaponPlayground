@@ -9,8 +9,8 @@
 
 UNWPSmartWeaponConfig::UNWPSmartWeaponConfig(const class FObjectInitializer& ObjectInitializer) : 
 	Super(ObjectInitializer),
-	VerticalTargetArea(200.0f),
 	HorizontalTargetArea(500.0f),
+	VerticalTargetArea(200.0f),
 	TargetLockSize(30),
 	UpdateProjectileDeltaTime(0.1f),
 	OrientProjectileToTargetVelocity(1.0f),

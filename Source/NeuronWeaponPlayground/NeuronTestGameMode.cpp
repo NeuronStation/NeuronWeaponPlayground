@@ -16,11 +16,4 @@ ANeuronTestGameMode::ANeuronTestGameMode()
 
 	// use our custom HUD class
 	HUDClass = ANWPHUD::StaticClass();
-
-	ObjectRegistryComponent = CreateDefaultSubobject<UNWPObjectRegistryComponent>(TEXT("ObjectRegistryComponent"));
-}
-
-class UNWPObjectRegistryComponent* ANeuronTestGameMode::GetObjectRegistryComponent()
-{
-	return ObjectRegistryComponent;
 }

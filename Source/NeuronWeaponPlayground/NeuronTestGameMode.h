@@ -2,29 +2,18 @@
 
 #pragma once
 
-// NWP
-#include "NWPObjectRegistryInterface.h"
-
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "NeuronTestGameMode.generated.h"
 
 UCLASS(minimalapi)
-class ANeuronTestGameMode : public AGameModeBase, public INWPObjectRegistryInterface
+class ANeuronTestGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public:
 
 	ANeuronTestGameMode();
-
-public:
-
-	virtual class UNWPObjectRegistryComponent* GetObjectRegistryComponent() override;
-
-protected:
-
-	class UNWPObjectRegistryComponent* ObjectRegistryComponent;
 
 };
 

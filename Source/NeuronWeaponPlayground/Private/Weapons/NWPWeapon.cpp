@@ -3,13 +3,13 @@
 // Class
 #include "NWPWeapon.h"
 
+// NWP
+#include "NeuronTestCharacter.h"
+
 // UE
 #include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h"
-
-// NWP
-#include "NeuronTestCharacter.h"
 
 ///////////////////////////////////////////////////////////////////////////
 //
