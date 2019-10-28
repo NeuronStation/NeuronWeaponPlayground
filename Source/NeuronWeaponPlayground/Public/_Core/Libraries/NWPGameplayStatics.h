@@ -18,7 +18,12 @@ class NEURONWEAPONPLAYGROUND_API UNWPGameplayStatics : public UBlueprintFunction
 // Member functions
 public:
 
-		// NWP version of UGameplayStatics::GetGameMode. Returns always a valid cast ANeuronTestGameMode
+		// NWP version of UGameplayStatics::GetGameMode. Returns always a valid cast ANWPGameMode
 		UFUNCTION(BlueprintPure, Category = "Game NWP", meta = (WorldContext = "WorldContextObject"))
 		static class ANWPGameMode* GetNWPGameMode(const UObject* WorldContextObject);
+
+
+		// NWP version of UGameplayStatics::GetGameState. Returns always a valid cast ANWPGameState
+		UFUNCTION(BlueprintPure, Category = "Game NWP", meta = (WorldContext = "WorldContextObject"))
+		static class ANWPGameState* GetNWPGameState(const UObject* WorldContextObject);
 };

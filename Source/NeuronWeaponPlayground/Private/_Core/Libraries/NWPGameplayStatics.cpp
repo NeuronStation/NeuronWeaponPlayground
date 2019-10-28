@@ -5,10 +5,12 @@
 
 // NWP
 #include"NWPGameMode.h"
+#include"NWPGameState.h"
 
 // UE
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameFramework/GameStateBase.h"
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -23,4 +25,19 @@ class ANWPGameMode* UNWPGameplayStatics::GetNWPGameMode(const UObject* WorldCont
 	check(CastGameModeBase);
 
 	return CastGameModeBase;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+class ANWPGameState* UNWPGameplayStatics::GetNWPGameState(const UObject* WorldContextObject)
+{
+	AGameStateBase* GameStateBase = UGameplayStatics::GetGameState(WorldContextObject);
+	check(GameStateBase);
+
+	ANWPGameState* CastGameStateBase = Cast<ANWPGameState>(GameStateBase);
+	check(CastGameStateBase);
+
+	return CastGameStateBase;
 }
