@@ -20,5 +20,5 @@ public:
 
 		// NWP version of UGameplayStatics::GetGameMode. Returns always a valid cast ANeuronTestGameMode
 		UFUNCTION(BlueprintPure, Category = "Game NWP", meta = (WorldContext = "WorldContextObject"))
-		static class ANeuronTestGameMode* GetNWPGameMode(const UObject* WorldContextObject);
+		static class ANWPGameMode* GetNWPGameMode(const UObject* WorldContextObject);
 };

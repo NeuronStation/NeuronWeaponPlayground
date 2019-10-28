@@ -4,7 +4,7 @@
 #include "NWPGameplayStatics.h"
 
 // NWP
-#include"NeuronTestGameMode.h"
+#include"NWPGameMode.h"
 
 // UE
 #include "Kismet/GameplayStatics.h"
@@ -14,12 +14,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-class ANeuronTestGameMode* UNWPGameplayStatics::GetNWPGameMode(const UObject* WorldContextObject)
+class ANWPGameMode* UNWPGameplayStatics::GetNWPGameMode(const UObject* WorldContextObject)
 {
 	AGameModeBase* GameModeBase = UGameplayStatics::GetGameMode(WorldContextObject);
 	check(GameModeBase);
 
-	ANeuronTestGameMode* CastGameModeBase = Cast<ANeuronTestGameMode>(GameModeBase);
+	ANWPGameMode* CastGameModeBase = Cast<ANWPGameMode>(GameModeBase);
 	check(CastGameModeBase);
 
 	return CastGameModeBase;
