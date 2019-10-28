@@ -23,6 +23,10 @@ DECLARE_EVENT_TwoParams(UNWPObjectRegistry, FOnObjectUnregisteredEventDelegate, 
  * It is useful to be able to get all the objects of a class and then for example loop them.
  * If you want to filter the object list, you must first request a copy of the object list and apply a predicate using the RemoveAll function as indicated here:
  * https://docs.unrealengine.com/en-US/Programming/UnrealArchitecture/TArrays/index.html
+ *
+ * TODO: [NWP-REVIEW]
+ * - Consider using the dynamic object class name as primary key.
+ * - Consider a better support for dynamic classes & blueprints.
  */
 UCLASS()
 class NEURONWEAPONPLAYGROUND_API UNWPObjectRegistry : public UObject
@@ -166,11 +170,11 @@ public:
 	{
 		UClass* StaticObjectClass = T::StaticClass();
 		check(StaticObjectClass);
-		UClass* ObjectClass = _ObjectToRegister->GetClass();
-		check(ObjectClass);
+		UClass* DynamicObjectClass = _ObjectToRegister->GetClass();
+		check(DynamicObjectClass);
 
 		// Check if the class passed to the function as template is the same or a child as the one passed in _ObjectToRegister (potential inconsistency)
-		if (!ensure(ObjectClass == StaticObjectClass || ObjectClass->IsChildOf(StaticObjectClass)))
+		if (!ensure(DynamicObjectClass == StaticObjectClass || DynamicObjectClass->IsChildOf(StaticObjectClass)))
 		{
 			V_LOG(LogNWPObjectRegistry, Warning, TEXT("Inconsistency found! The class passed to the function as template must be the same or a child as the "
 				"one passed in _ObjectToRegister"));
@@ -202,12 +206,12 @@ public:
 	{
 		UClass* StaticObjectClass = T::StaticClass();
 		check(StaticObjectClass);
-		UClass* ObjectClass = _ObjectToUnregister->GetClass();
-		check(ObjectClass);
+		UClass* DynamicObjectClass = _ObjectToUnregister->GetClass();
+		check(DynamicObjectClass);
 		ObjectEntry* CurrentObjectEntry = nullptr;
 
 		// Check if the class passed to the function as template is the same or a child as the one passed in _ObjectToUnregister (potential inconsistency)
-		if (!ensure(ObjectClass == StaticObjectClass || ObjectClass->IsChildOf(StaticObjectClass)))
+		if (!ensure(DynamicObjectClass == StaticObjectClass || DynamicObjectClass->IsChildOf(StaticObjectClass)))
 		{
 			V_LOG(LogNWPObjectRegistry, Warning, TEXT("Inconsistency found! The class passed to the function as template must be the same or a child as the "
 				"one passed in _ObjectToRegister"));
@@ -236,12 +240,12 @@ public:
 	template <typename T>
 	const TArray<T*>& GetRegisteredObjects() const
 	{
-		UClass* ObjectClass = T::StaticClass();
-		check(ObjectClass);
+		UClass* StaticObjectClass = T::StaticClass();
+		check(StaticObjectClass);
 
-		if (ClassNameObjectEntryMap.Contains(ObjectClass->GetFName()))
+		if (ClassNameObjectEntryMap.Contains(StaticObjectClass->GetFName()))
 		{
-			TemplateObjectEntry<T*>* ObjectEntry = static_cast<TemplateObjectEntry<T*>*>(ClassNameObjectEntryMap[ObjectClass->GetFName()].Get());
+			TemplateObjectEntry<T*>* ObjectEntry = static_cast<TemplateObjectEntry<T*>*>(ClassNameObjectEntryMap[StaticObjectClass->GetFName()].Get());
 			check(ObjectEntry);
 			return ObjectEntry->GetCastObjectList();
 		}
