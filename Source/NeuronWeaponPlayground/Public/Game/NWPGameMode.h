@@ -18,6 +18,6 @@ class ANWPGameMode : public AGameModeBase
 // Constructors
 public:
 
-	ANWPGameMode();
+	ANWPGameMode(const class FObjectInitializer& ObjectInitializer);
 
 };

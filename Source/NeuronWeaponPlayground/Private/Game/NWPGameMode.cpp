@@ -4,6 +4,7 @@
 #include "NWPGameMode.h"
 
 // NWP
+#include "NWPGameState.h"
 #include "NWPHUD.h"
 
 // UE
@@ -13,7 +14,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-ANWPGameMode::ANWPGameMode()
+ANWPGameMode::ANWPGameMode(const class FObjectInitializer& ObjectInitializer)
 	: Super()
 {
 	// Set default pawn class to our Blueprinted character
@@ -21,6 +22,7 @@ ANWPGameMode::ANWPGameMode()
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/Character/BP_Character"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 
-	// use our custom HUD class
+	// Use our custom NWP classes
+	GameStateClass = ANWPGameState::StaticClass();
 	HUDClass = ANWPHUD::StaticClass();
 }
