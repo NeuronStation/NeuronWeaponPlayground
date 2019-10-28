@@ -10,7 +10,11 @@
 #include "DrawDebugHelpers.h"
 
 // NWP
-#include "NWPTarget.h"
+#include "NWPGameplayStatics.h"
+#include "NWPGameState.h"
+#include "NWPObjectRegistryComponent.h"
+#include "NWPWeaponTargetComponent.h"
+#include "NWPObjectRegistry.h"
 #include "NWPUtils.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -145,30 +149,28 @@ void ANWPSmartWeapon::CalculateViewportTargetPositions()
 void ANWPSmartWeapon::UpdateTargets()
 {
 	UWorld* World = GetWorld();
-	TArray<AActor*> PotentialTargets;
+
+	// Query the weapon target components
+	UNWPObjectRegistryComponent* ObjectRegistryComponent = UNWPGameplayStatics::GetNWPGameState(this)->GetObjectRegistryComponent();
+	check(ObjectRegistryComponent && ObjectRegistryComponent->GetObjectRegistry());
+	const TArray<UNWPWeaponTargetComponent*>&  WeaponTargetComponents = ObjectRegistryComponent->GetObjectRegistry()->GetRegisteredObjects<UNWPWeaponTargetComponent>();
+
+	// Evaluate if the potential targets are inside the target area & the ones that left the target area
 	TArray<AActor*> TargetsToRemoveFromCache;
 
-	// Evaluate rendered actors
-	// TODO: [NWP-REVIEW] ANWPTarget should be a component and not an actor due to potential deadly diamond of death problems
-	for (TObjectIterator<class ANWPTarget> It; It; ++It)
+	for (int32 Index = 0; Index < WeaponTargetComponents.Num(); ++Index)
 	{
-		if (It->GetWorld() == World)
-		{
-			PotentialTargets.Add(*It);
-		}
-	}
+		AActor* WeaponTargetComponentOwner = WeaponTargetComponents[Index]->GetOwner();
+		check(WeaponTargetComponentOwner);
 
-	// Evaluate if the potential targets are inside the target area
-	for (int32 Index = 0; Index < PotentialTargets.Num(); ++Index)
-	{
 		// TODO: [NWP-REVIEW] Consider checking bounding box projection onto the viewport
-		if (IsActorInsideTargetArea(PotentialTargets[Index]))
+		if (IsActorInsideTargetArea(WeaponTargetComponentOwner))
 		{
-			CurrentTargets.AddUnique(PotentialTargets[Index]);
+			CurrentTargets.AddUnique(WeaponTargetComponentOwner);
 		}
-		else if(CurrentTargets.Contains(PotentialTargets[Index]))
+		else if(CurrentTargets.Contains(WeaponTargetComponentOwner))
 		{
-			TargetsToRemoveFromCache.AddUnique(PotentialTargets[Index]);
+			TargetsToRemoveFromCache.AddUnique(WeaponTargetComponentOwner);
 		}
 	}
 
