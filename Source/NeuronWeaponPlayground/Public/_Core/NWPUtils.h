@@ -4,14 +4,14 @@
 
 // Generated
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "NWPUtils.generated.h"
 
 /**
  * A set of useful functions.
  */
 UCLASS()
-class NEURONWEAPONPLAYGROUND_API UNWPUtils : public UObject
+class NEURONWEAPONPLAYGROUND_API UNWPUtils : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
