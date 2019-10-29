@@ -72,7 +72,7 @@ private:
 /**
 
 # Basic:
-#############
+########
 - Curly braces should always appear even if it is for one line.
 - Starting curly brace should appear on a new line.
 - No need to write == nullptr when null checking.
@@ -146,8 +146,13 @@ private:
 - Whether it is dynamic or not is not indicated in the name of the event/delegate.
 
 # Miscellaneous:
-###############
+################
 - Use Transient and SkipSerialization for cache variables. 
+
+# Project / Blueprints:
+#######################
+- For a correct management of the project content check the following link: https://github.com/Allar/ue4-style-guide#structure
+- If you are not a user on GitHub you might get a 404 error using the previous link. Just create an account and you will be good to go.
 
 **/
 };
