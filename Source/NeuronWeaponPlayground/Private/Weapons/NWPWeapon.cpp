@@ -4,7 +4,7 @@
 #include "NWPWeapon.h"
 
 // NWP
-#include "NeuronTestCharacter.h"
+#include "NWPCharacter.h"
 
 // UE
 #include "Kismet/GameplayStatics.h"
@@ -126,7 +126,7 @@ void ANWPWeapon::SwapCadenceType()
 //
 ///////////////////////////////////////////////////////////////////////////
 
-void ANWPWeapon::SetOwnerCharacter(class ANeuronTestCharacter* _NewOwnerCharacter, bool _bAttachToOwner)
+void ANWPWeapon::SetOwnerCharacter(class ANWPCharacter* _NewOwnerCharacter, bool _bAttachToOwner)
 {
 	// Set the new value
 	OwnerCharacter = _NewOwnerCharacter;
@@ -144,7 +144,7 @@ void ANWPWeapon::SetOwnerCharacter(class ANeuronTestCharacter* _NewOwnerCharacte
 
 void ANWPWeapon::AttachToOwner()
 {
-	USkeletalMeshComponent* OwnerSkelletalMesh = OwnerCharacter->GetNWPSkelletalMeshComponent();
+	USkeletalMeshComponent* OwnerSkelletalMesh = OwnerCharacter->GetFirstPersonMeshComponent();
 	check(OwnerSkelletalMesh);
 
 	// Attach gun actor to owner skelleton

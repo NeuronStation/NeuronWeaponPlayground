@@ -4,7 +4,7 @@
 #include "NWPAnimInstanceCharacter.h"
 
 // NWP
-#include "NeuronTestCharacter.h"
+#include "NWPCharacter.h"
 #include "NWPWeapon.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ void UNWPAnimInstanceCharacter::NativeInitializeAnimation()
 	Super::NativeInitializeAnimation();
 
 	// Cache the owning pawn for use in Tick
-	OwnerCharacter = Cast<ANeuronTestCharacter>(TryGetPawnOwner());
+	OwnerCharacter = Cast<ANWPCharacter>(TryGetPawnOwner());
 }
 
 ///////////////////////////////////////////////////////////////////////////

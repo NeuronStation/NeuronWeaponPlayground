@@ -3,7 +3,7 @@
 #pragma once
 
 // NWP
-#include "NeuronTestCharacter.h"
+#include "NWPCharacter.h"
 #include "NWPWeaponConfig.h"
 #include "NWPProjectile.h"
 
@@ -88,10 +88,10 @@ public:
 	FORCEINLINE bool HasOwner() const { return OwnerCharacter != nullptr; }
 
 	// Returns the weapon owner
-	FORCEINLINE class ANeuronTestCharacter* GetCharacterOwner() const { return OwnerCharacter; }
+	FORCEINLINE class ANWPCharacter* GetCharacterOwner() const { return OwnerCharacter; }
 
 	// This function that sets the owner character for this weapon
-	void SetOwnerCharacter(class ANeuronTestCharacter* _NewOwnerCharacter, bool _bAttachToOwner = true);
+	void SetOwnerCharacter(class ANWPCharacter* _NewOwnerCharacter, bool _bAttachToOwner = true);
 
 	// Attaches the weapon to the owner
 	void AttachToOwner();
@@ -199,7 +199,7 @@ protected:
 
 	// Reference to the owning character
 	UPROPERTY(Transient, SkipSerialization)
-	class ANeuronTestCharacter* OwnerCharacter;
+	class ANWPCharacter* OwnerCharacter;
 
 	// Current weapon config
 	UPROPERTY(Transient, SkipSerialization)

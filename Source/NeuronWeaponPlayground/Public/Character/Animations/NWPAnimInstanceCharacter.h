@@ -43,7 +43,7 @@ protected:
 
 	// Reference to the owning character 
 	UPROPERTY(Transient, SkipSerialization)
-	class ANeuronTestCharacter* OwnerCharacter;
+	class ANWPCharacter* OwnerCharacter;
 
 	// Montage currently playing
 	UPROPERTY(Transient, SkipSerialization)

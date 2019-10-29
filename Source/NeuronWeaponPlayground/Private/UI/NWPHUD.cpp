@@ -11,7 +11,7 @@
 #include "UObject/ConstructorHelpers.h"
 
 // NWP
-#include "NeuronTestCharacter.h"
+#include "NWPCharacter.h"
 #include "NWPSmartWeapon.h"
 #include "NWPSmartWeaponConfig.h"
 #include "NWPUtils.h"
@@ -24,7 +24,7 @@ void ANWPHUD::DrawHUD()
 {
 	Super::DrawHUD();
 
-	ANeuronTestCharacter* OwningCharacter = Cast<ANeuronTestCharacter>(GetOwningPawn());
+	ANWPCharacter* OwningCharacter = Cast<ANWPCharacter>(GetOwningPawn());
 
 	if (OwningCharacter)
 	{
