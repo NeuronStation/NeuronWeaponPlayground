@@ -10,7 +10,7 @@
 #include "UObject/NoExportTypes.h"
 #include "NWPObjectRegistry.generated.h"
 
-// Types
+// Log category
 DECLARE_LOG_CATEGORY_EXTERN(LogNWPObjectRegistry, Log, All);
 
 // Delegates

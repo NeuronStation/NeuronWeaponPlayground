@@ -3,6 +3,7 @@
 // Class
 #include "NWPObjectRegistry.h"
 
+// Log category
 DEFINE_LOG_CATEGORY(LogNWPObjectRegistry);
 
 ///////////////////////////////////////////////////////////////////////////

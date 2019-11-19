@@ -11,6 +11,9 @@
 #include "UObject/NoExportTypes.h"
 #include "TemplateClass.generated.h"
 
+// Log category
+DECLARE_LOG_CATEGORY_EXTERN(LogCustom, Log, All);
+
 // Types
 
 // Delegates
@@ -28,6 +31,15 @@ friend class UObject;
 
 // Types
 public:
+
+protected:
+
+private:
+
+// Constants
+public:
+
+	static const FName CustomConstant;
 
 protected:
 
