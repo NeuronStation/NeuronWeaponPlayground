@@ -20,4 +20,12 @@ public:
 
 	ANWPGameMode(const class FObjectInitializer& ObjectInitializer);
 
+// Member functions
+protected:
+
+	/// AActor interface begin
+	// Overridable native event for when play begins for this actor
+	virtual void BeginPlay() override;
+	/// AActor interface end
+
 };

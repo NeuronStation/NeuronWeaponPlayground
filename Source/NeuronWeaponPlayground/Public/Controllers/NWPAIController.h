@@ -43,6 +43,17 @@ protected:
 	virtual void OnUnPossess() override;
 	/// AController interface end
 
+	/// IGenericTeamAgentInterface interface begin
+	// Assigns Team Agent to given TeamID
+	virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override;
+
+	// Retrieve team identifier in form of FGenericTeamId
+	virtual FGenericTeamId GetGenericTeamId() const override;
+
+	// Retrieved owner attitude toward given Other object
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	/// IGenericTeamAgentInterface interface end
+
 	// Starts a behavior tree on the ai controller
 	void StartBehaviouTree(class UBehaviorTree* _BehaviorTreeToStart);
 

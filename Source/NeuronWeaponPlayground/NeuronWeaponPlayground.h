@@ -2,6 +2,10 @@
 
 #pragma once
 
+// UE
+#include "GenericTeamAgentInterface.h"
+
+// Generated
 #include "CoreMinimal.h"
 
 // Collision projectiles
@@ -85,6 +89,15 @@ DECLARE_LOG_CATEGORY_EXTERN(LogNWP, Log, All);
 
 // ------------------------------------- /Extended Log -------------------------------------
 
+// Enum for the character teams
+UENUM(BlueprintType)
+enum class ENWPCharacterTeam : uint8
+{
+	FirstTeam = 0,
+	SecondTeam = 1,
+	NoTeam = 255
+};
+
 // Enum for the states of the weapon
 UENUM(BlueprintType)
 enum class ENWPWeaponState : uint8
@@ -121,3 +134,25 @@ enum class ENWPSmartProjectileState : uint8
 	OrientatingToTarget,
 	HitWithSomething,
 };
+
+// Solver used to determine if one team is hostile, friendly or neutral against other
+static ETeamAttitude::Type CharacterTeamAttitudeSolver(FGenericTeamId A, FGenericTeamId B)
+{
+	ENWPCharacterTeam CharacterTeamA = static_cast<ENWPCharacterTeam>(A.GetId());
+	ENWPCharacterTeam CharacterTeamB = static_cast<ENWPCharacterTeam>(B.GetId());
+
+	// If the character teams are equal, friendly attitude
+	if (CharacterTeamA == CharacterTeamB)
+	{
+		return ETeamAttitude::Friendly;
+	}
+	// If the character teams are opposing, hostile attitude
+	else if((CharacterTeamA == ENWPCharacterTeam::FirstTeam && CharacterTeamB == ENWPCharacterTeam::SecondTeam) ||
+		(CharacterTeamA == ENWPCharacterTeam::SecondTeam && CharacterTeamB == ENWPCharacterTeam::FirstTeam))
+	{
+		return ETeamAttitude::Hostile;
+	}
+
+	// Otherwise, neutral attitude
+	return  ETeamAttitude::Neutral;
+}

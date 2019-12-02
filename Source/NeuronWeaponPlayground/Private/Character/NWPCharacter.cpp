@@ -12,6 +12,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 
+// Log category
+DEFINE_LOG_CATEGORY(LogANWPCharacter);
+
 ///////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////
@@ -22,6 +25,8 @@ ANWPCharacter::ANWPCharacter(const class FObjectInitializer& ObjectInitializer) 
 	BaseLookUpRate(45.0f),
 	FirstPersonMeshComponent(nullptr),
 	FirstPersonCameraComponent(nullptr),
+	CharacterTeam(ENWPCharacterTeam::FirstTeam),
+	CurrentCharacterTeam(0),
 	CurrentWeapon(nullptr),
 	CurrentWeaponIndex(-1)
 
@@ -74,6 +79,9 @@ void ANWPCharacter::BeginPlay()
 
 	// Configure the first person mesh component
 	FirstPersonMeshComponent->SetHiddenInGame(false, true);
+
+	// Process the character team
+	CurrentCharacterTeam = FGenericTeamId(static_cast<uint8>(CharacterTeam));
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -111,6 +119,35 @@ void ANWPCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	// Weapon inventory
 	PlayerInputComponent->BindAction("SelectNextWeapon", IE_Pressed, this, &ANWPCharacter::OnSelectNextWeapon);
 	PlayerInputComponent->BindAction("SelectPrevioustWeapon", IE_Pressed, this, &ANWPCharacter::OnSelectPreviousWeapon);
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+void ANWPCharacter::SetGenericTeamId(const FGenericTeamId& TeamID)
+{
+	// The team id cannot be set directly
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+FGenericTeamId ANWPCharacter::GetGenericTeamId() const
+{
+	return CurrentCharacterTeam.GetId();
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+ETeamAttitude::Type ANWPCharacter::GetTeamAttitudeTowards(const AActor& Other) const
+{
+	V_LOG(LogANWPCharacter, Warning, TEXT("The method GetTeamAttitudeTowards on the character should never be called "));
+	return ETeamAttitude::Neutral;
 }
 
 ///////////////////////////////////////////////////////////////////////////

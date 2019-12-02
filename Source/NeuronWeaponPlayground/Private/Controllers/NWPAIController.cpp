@@ -60,8 +60,10 @@ void ANWPAIController::OnPossess(APawn* InPawn)
 	{
 		StartBehaviouTree(DefaultBehaviorTree);
 	}
-
-	V_LOG(LogNWPAIController, Warning, TEXT("There is no valid behaviour tree"));
+	else
+	{
+		V_LOG(LogNWPAIController, Warning, TEXT("There is no valid behaviour tree"));
+	}
 
 	// Register to the target perception updated callback
 	if (PerceptionComponent)
@@ -87,6 +89,40 @@ void ANWPAIController::OnUnPossess()
 	CurrentOwner = nullptr;
 
 	Super::OnUnPossess();
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+void ANWPAIController::SetGenericTeamId(const FGenericTeamId& NewTeamID)
+{
+	// Ignore the team ID from the AI Controller
+	V_LOG(LogNWPAIController, Warning, TEXT("The team ID from the NWPAIController should not be used"));
+	return;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+FGenericTeamId ANWPAIController::GetGenericTeamId() const
+{
+	// Ignore the team ID from the AI Controller
+	V_LOG(LogNWPAIController, Warning, TEXT("The team ID from the NWPAIController should not be used"));
+	return FGenericTeamId::NoTeam;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+ETeamAttitude::Type ANWPAIController::GetTeamAttitudeTowards(const AActor& Other) const
+{
+	const IGenericTeamAgentInterface* CurrentOwnerAgent = Cast<const IGenericTeamAgentInterface>(CurrentOwner);
+	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(&Other);
+	return OtherTeamAgent ? FGenericTeamId::GetAttitude(CurrentOwnerAgent->GetGenericTeamId(), OtherTeamAgent->GetGenericTeamId())
+		: ETeamAttitude::Neutral;
 }
 
 ///////////////////////////////////////////////////////////////////////////

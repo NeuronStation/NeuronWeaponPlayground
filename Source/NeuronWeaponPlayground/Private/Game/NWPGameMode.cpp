@@ -4,6 +4,7 @@
 #include "NWPGameMode.h"
 
 // NWP
+#include "NeuronWeaponPlayground.h"
 #include "NWPGameState.h"
 #include "NWPHUD.h"
 #include "NWPCharacter.h"
@@ -22,4 +23,16 @@ ANWPGameMode::ANWPGameMode(const class FObjectInitializer& ObjectInitializer)
 	GameStateClass = ANWPGameState::StaticClass();
 	HUDClass = ANWPHUD::StaticClass();
 	DefaultPawnClass = ANWPCharacter::StaticClass();
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+void ANWPGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Set the character attitude solver
+	FGenericTeamId::SetAttitudeSolver(CharacterTeamAttitudeSolver);
 }

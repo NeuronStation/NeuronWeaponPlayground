@@ -2,16 +2,25 @@
 
 #pragma once
 
+// NWP
+#include "NeuronWeaponPlayground.h"
+
+// UE
+#include "GenericTeamAgentInterface.h"
+
 // Generated
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "NWPCharacter.generated.h"
 
+// Log category
+DECLARE_LOG_CATEGORY_EXTERN(LogANWPCharacter, Log, All);
+
 /**
  * Character of the game. Can have equipped with one weapon and have several weapons in the inventory.
  */
 UCLASS(config=Game)
-class ANWPCharacter : public ACharacter
+class ANWPCharacter : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -53,6 +62,17 @@ protected:
 	// 	Allows a Pawn to set up custom input bindings. Called upon possession by a PlayerController, using the InputComponent created by CreatePlayerInputComponent()
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	/// APawn interface end
+
+	/// IGenericTeamAgentInterface interface begin
+	// Assigns Team Agent to given TeamID
+	virtual void SetGenericTeamId(const FGenericTeamId& TeamID) override;
+
+	// Retrieve team identifier in form of FGenericTeamId
+	virtual FGenericTeamId GetGenericTeamId() const override;
+
+	// Retrieved owner attitude toward given Other object
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	/// IGenericTeamAgentInterface interface end
 
 	// Internal accessor for the anim instance
 	class UNWPAnimInstanceCharacter* GetNWPAnimInstance() const;
@@ -99,10 +119,6 @@ protected:
 // Member variables
 protected:
 
-	// Default weapon classes to spawn
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
-	TArray<TSubclassOf<class ANWPWeapon>> DefaultWeaponClasses;
-
 	// Base turn rate (degrees/second). Other scaling may affect final turn rate
 	UPROPERTY(EditDefaultsOnly, Category = "Camera", meta = (UIMin = 0, ClampMin = 0, AllowPrivateAccess = "true"))
 	float BaseTurnRate;
@@ -118,6 +134,18 @@ protected:
 	// First person view camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
+
+	// The character team
+	UPROPERTY(EditInstanceOnly, Category = "Team", meta = (AllowPrivateAccess = "true"))
+	ENWPCharacterTeam CharacterTeam;
+
+	// Default weapon classes to spawn
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TArray<TSubclassOf<class ANWPWeapon>> DefaultWeaponClasses;
+
+	// The current character team
+	UPROPERTY(Transient, SkipSerialization)
+	FGenericTeamId CurrentCharacterTeam;
 
 	// The current character weapon
 	UPROPERTY(Transient, SkipSerialization)
