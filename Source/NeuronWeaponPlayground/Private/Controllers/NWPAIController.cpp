@@ -35,6 +35,33 @@ ANWPAIController::ANWPAIController(const class FObjectInitializer& ObjectInitial
 //
 ///////////////////////////////////////////////////////////////////////////
 
+void ANWPAIController::StartCharacterBehaviorTree(class UBehaviorTree* _CharacterBehaviorTreeToStart)
+{
+	// Get the ai configuration component
+	UNWPAIConfigurationComponent* AIConfigurationComponent = Cast<UNWPAIConfigurationComponent>(
+		CurrentOwner->GetComponentByClass(UNWPAIConfigurationComponent::StaticClass()));
+
+	if (!AIConfigurationComponent->IsCharacterBehaviorTreeCompatible(_CharacterBehaviorTreeToStart))
+	{
+		return;
+	}
+
+	StartBehaviouTree(_CharacterBehaviorTreeToStart);
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
+void ANWPAIController::StopCharacterBehaviorTree()
+{
+	StopBehaviorTree();
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void ANWPAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -44,19 +71,10 @@ void ANWPAIController::OnPossess(APawn* InPawn)
 	check(!CurrentOwner);
 	CurrentOwner = CastChecked<ANWPCharacter>(InPawn);
 
-	// Get the ai configuration component
-	UNWPAIConfigurationComponent* AIConfigurationComponent = Cast<UNWPAIConfigurationComponent>(
-		CurrentOwner->GetComponentByClass(UNWPAIConfigurationComponent::StaticClass()));
-
-	// Use the behavior tree of the ai configuration component or the default behavior tree of the ai controller
-	if (AIConfigurationComponent && AIConfigurationComponent->GetConfiguredBehaviorTree())
+	// Use the default behavior tree of the ai controller
+	if (DefaultBehaviorTree)
 	{
-		StartBehaviouTree(AIConfigurationComponent->GetConfiguredBehaviorTree());
-		BuildBlackboard(AIConfigurationComponent);
-	}
-	else if (DefaultBehaviorTree)
-	{
-		StartBehaviouTree(DefaultBehaviorTree);
+		StartCharacterBehaviorTree(DefaultBehaviorTree);
 	}
 	else
 	{
@@ -83,7 +101,7 @@ void ANWPAIController::OnUnPossess()
 	}
 
 	// Stop the current behavior tree & clean the current owner
-	StopBehaviorTree();
+	StopCharacterBehaviorTree();
 	CurrentOwner = nullptr;
 
 	Super::OnUnPossess();

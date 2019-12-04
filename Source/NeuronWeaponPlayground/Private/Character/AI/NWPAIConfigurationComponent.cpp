@@ -9,7 +9,6 @@
 
 UNWPAIConfigurationComponent::UNWPAIConfigurationComponent(const class FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer),
-	ConfiguredBehaviorTree(nullptr),
 	bIsFollower(false)
 {
 

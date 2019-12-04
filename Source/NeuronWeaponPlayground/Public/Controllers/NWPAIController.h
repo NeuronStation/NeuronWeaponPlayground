@@ -33,6 +33,14 @@ public:
 	ANWPAIController(const class FObjectInitializer& ObjectInitializer);
 
 // Member functions
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void StartCharacterBehaviorTree(class UBehaviorTree* _CharacterBehaviorTreeToStart);
+
+	UFUNCTION(BlueprintCallable)
+	void StopCharacterBehaviorTree();
+
 protected:
 
 	/// AController interface begin

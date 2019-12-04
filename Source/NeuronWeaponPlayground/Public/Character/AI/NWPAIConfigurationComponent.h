@@ -23,8 +23,10 @@ public:
 // Member functions
 public:
 
-	// Returns the behavior tree configured for the ai
-	FORCEINLINE class UBehaviorTree* GetConfiguredBehaviorTree() const { return ConfiguredBehaviorTree; }
+	FORCEINLINE bool IsCharacterBehaviorTreeCompatible(class UBehaviorTree* CharacterBehaviorTree) const
+	{
+		return CompatibleCharacterBehaviorTree.Contains(CharacterBehaviorTree);
+	}
 
 	// Returns if the ai is a follower
 	FORCEINLINE bool IsFollower() const { return bIsFollower; }
@@ -32,9 +34,8 @@ public:
 // Member variables
 protected:
 
-	// Behavior tree configured for the ai
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UBehaviorTree* ConfiguredBehaviorTree;
+	TSet<class UBehaviorTree*> CompatibleCharacterBehaviorTree;
 
 	// Indicates if the ai is a follower
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
