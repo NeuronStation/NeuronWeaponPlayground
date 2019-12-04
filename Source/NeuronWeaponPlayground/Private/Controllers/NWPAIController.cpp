@@ -29,8 +29,6 @@ const FName ANWPAIController::TargetActorLabel(TEXT("TargetActor"));
 ANWPAIController::ANWPAIController(const class FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer)
 {
-	//// Create a PerceptionComponent. NOTE: The PerceptionComponent is never created by the AIController
-	//PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -97,8 +95,7 @@ void ANWPAIController::OnUnPossess()
 
 void ANWPAIController::SetGenericTeamId(const FGenericTeamId& NewTeamID)
 {
-	// Ignore the team ID from the AI Controller
-	V_LOG(LogNWPAIController, Warning, TEXT("The team ID from the NWPAIController should not be used"));
+	V_LOG(LogNWPAIController, Warning, TEXT("The team id cannot be set directly"));
 	return;
 }
 
@@ -108,8 +105,14 @@ void ANWPAIController::SetGenericTeamId(const FGenericTeamId& NewTeamID)
 
 FGenericTeamId ANWPAIController::GetGenericTeamId() const
 {
-	// Ignore the team ID from the AI Controller
-	V_LOG(LogNWPAIController, Warning, TEXT("The team ID from the NWPAIController should not be used"));
+	// Get the team id from the owner if valid
+	const IGenericTeamAgentInterface* CurrentOwnerAgent = Cast<const IGenericTeamAgentInterface>(CurrentOwner);
+
+	if (CurrentOwnerAgent)
+	{
+		return CurrentOwnerAgent->GetGenericTeamId();
+	}
+
 	return FGenericTeamId::NoTeam;
 }
 

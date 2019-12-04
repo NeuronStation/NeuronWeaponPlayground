@@ -127,7 +127,7 @@ void ANWPCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 
 void ANWPCharacter::SetGenericTeamId(const FGenericTeamId& TeamID)
 {
-	// The team id cannot be set directly
+	V_LOG(LogANWPCharacter, Warning, TEXT("The team id cannot be set directly"));
 	return;
 }
 
