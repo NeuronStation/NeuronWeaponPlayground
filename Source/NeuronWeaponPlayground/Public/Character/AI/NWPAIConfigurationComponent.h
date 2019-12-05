@@ -25,7 +25,7 @@ public:
 
 	// Returns if the ai is compatible with a given behavior tree
 	FORCEINLINE bool IsCharacterBehaviorTreeCompatible(class UBehaviorTree* CharacterBehaviorTree) const
-	{ 
+	{
 		return CompatibleCharacterBehaviorTree.Contains(CharacterBehaviorTree);
 	}
 
