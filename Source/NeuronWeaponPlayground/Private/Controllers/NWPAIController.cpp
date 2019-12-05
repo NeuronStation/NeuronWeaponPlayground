@@ -41,11 +41,13 @@ void ANWPAIController::StartCharacterBehaviorTree(class UBehaviorTree* _Characte
 	UNWPAIConfigurationComponent* AIConfigurationComponent = Cast<UNWPAIConfigurationComponent>(
 		CurrentOwner->GetComponentByClass(UNWPAIConfigurationComponent::StaticClass()));
 
+	// Check if the behavior tree is compatible with the AI configuration
 	if (!AIConfigurationComponent->IsCharacterBehaviorTreeCompatible(_CharacterBehaviorTreeToStart))
 	{
 		return;
 	}
 
+	// Start the behavior tree
 	StartBehaviouTree(_CharacterBehaviorTreeToStart);
 }
 
@@ -55,6 +57,7 @@ void ANWPAIController::StartCharacterBehaviorTree(class UBehaviorTree* _Characte
 
 void ANWPAIController::StopCharacterBehaviorTree()
 {
+	// Stop the behavior tree
 	StopBehaviorTree();
 }
 

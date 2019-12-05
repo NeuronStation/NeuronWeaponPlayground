@@ -35,10 +35,12 @@ public:
 // Member functions
 public:
 
-	UFUNCTION(BlueprintCallable)
+	// Starts a behavior tree (checking if it is compatible with it) on the ai controller
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	void StartCharacterBehaviorTree(class UBehaviorTree* _CharacterBehaviorTreeToStart);
 
-	UFUNCTION(BlueprintCallable)
+	// Stops the behavior tree currently being executed on the ai controller
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	void StopCharacterBehaviorTree();
 
 protected:

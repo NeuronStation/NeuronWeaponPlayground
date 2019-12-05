@@ -23,8 +23,9 @@ public:
 // Member functions
 public:
 
+	// Returns if the ai is compatible with a given behavior tree
 	FORCEINLINE bool IsCharacterBehaviorTreeCompatible(class UBehaviorTree* CharacterBehaviorTree) const
-	{
+	{ 
 		return CompatibleCharacterBehaviorTree.Contains(CharacterBehaviorTree);
 	}
 
@@ -34,6 +35,7 @@ public:
 // Member variables
 protected:
 
+	// Indicates the behavior trees compatible with the ai
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	TSet<class UBehaviorTree*> CompatibleCharacterBehaviorTree;
 
