@@ -31,22 +31,32 @@ public:
 // Member functions
 public:
 
+	// Returns if the waypoint behavior is active
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	FORCEINLINE	bool IsWaypointBehaviorActive() const { return bIsWaypointBehaviorActive; }
+
 	// Returns the current waypoint of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	class ATargetPoint* GetCurrentWaypoint() const;
 
 	// Returns the previous waypoint of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	class ATargetPoint* GetPreviousWaypoint() const;
 
 	// Returns the next waypoint of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	class ATargetPoint* GetNextWaypoint() const;
 
 	// Returns the current waypoint index of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	int32 GetCurrentWaypointIndex() const;
 
 	// Returns the previous waypoint index of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	int32 GetPreviousWaypointIndex() const;
 
 	// Returns the next waypoint index of the path
+	UFUNCTION(BlueprintCallable, Category = "AI")
 	int32 GetNextWaypointIndex() const;
 
 	// Starts the waypoint follow behavior on the pawn
@@ -102,6 +112,10 @@ protected:
 	UPROPERTY(Transient, SkipSerialization)
 	class APawn* OwnerPawn;
 
+	// Indicates if the waypoint behavior is active
+	UPROPERTY(Transient, SkipSerialization)
+	bool bIsWaypointBehaviorActive;
+
 	// The current waypoint index
 	UPROPERTY(Transient, SkipSerialization)
 	int32 CurrentWaypointIndex;
@@ -113,8 +127,4 @@ protected:
 	// The cached waypoint index when the waypoint behavior stops
 	UPROPERTY(Transient, SkipSerialization)
 	int32 StopWaypointIndex;
-
-	// Indicates if the waypoint behavior is active
-	UPROPERTY(Transient, SkipSerialization)
-	bool bIsWaypointBehaviorActive;
 };

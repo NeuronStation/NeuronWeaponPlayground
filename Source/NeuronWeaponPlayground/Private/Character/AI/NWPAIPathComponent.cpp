@@ -20,10 +20,10 @@ UNWPAIPathComponent::UNWPAIPathComponent(const class FObjectInitializer& ObjectI
 	bIsClosedPath(false),
 	AcceptanceRadius(10.0f),
 	OwnerPawn(nullptr),
+	bIsWaypointBehaviorActive(false),
 	CurrentWaypointIndex(-1),
 	MovingToWaypointIndex(-1),
-	StopWaypointIndex(-1),
-	bIsWaypointBehaviorActive(false)
+	StopWaypointIndex(-1)
 {
 
 }
@@ -143,7 +143,7 @@ void UNWPAIPathComponent::StartWaypointBehavior(ENWPWaypointBehaviorStartType Wa
 	}
 	else if (WaypointBehaviorStartType == ENWPWaypointBehaviorStartType::UseCache)
 	{
-		MoveToWaypointByIndex(StopWaypointIndex);
+		MoveToWaypointByIndex(StopWaypointIndex > 0 ? StopWaypointIndex : 0);
 		StopWaypointIndex = -1;
 	}
 	else
