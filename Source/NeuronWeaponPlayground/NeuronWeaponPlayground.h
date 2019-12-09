@@ -135,6 +135,15 @@ enum class ENWPSmartProjectileState : uint8
 	HitWithSomething,
 };
 
+// Enum for the start of the waypoint behavior
+UENUM(BlueprintType)
+enum class ENWPWaypointBehaviorStartType : uint8
+{
+	UseFirst,
+	UseCache,
+	ByIndex,
+};
+
 // Solver used to determine if one team is hostile, friendly or neutral against other
 static ETeamAttitude::Type CharacterTeamAttitudeSolver(FGenericTeamId A, FGenericTeamId B)
 {
