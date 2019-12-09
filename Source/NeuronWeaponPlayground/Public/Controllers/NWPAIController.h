@@ -24,7 +24,6 @@ class NEURONWEAPONPLAYGROUND_API ANWPAIController : public AAIController
 // Constants
 public:
 
-	static const FName IsFollowerLabel;
 	static const FName HasSightLabel;
 	static const FName TargetActorLabel;
 
@@ -73,18 +72,23 @@ protected:
 	// Builds a blackborad using the ai configuration
 	void BuildBlackboard(class UNWPAIConfigurationComponent* _AIConfigurationComponent);
 
-	// Updates the follower key from the blackboard
-	void UpdateIsFollowerKey(bool _bIsFollower);
-
 	// Updates the has sight key from the blackboard
 	void UpdateHasSightKey(bool _bHasSight);
 
 	// Updates the target actor key from the blackboard
 	void UpdateTargetActorKey(AActor* _TargetActor);
 
+	// Event called when the behavior tree changes
+	UFUNCTION(BlueprintImplementableEvent, Category = "AI")
+	void OnBehaviorTreeChanged(class UBehaviorTree* _PreviousBehaviorTree, class UBehaviorTree* _NextBehaviorTree);
+
 	// Callback executed when a stimulus is perceived by the perception component
 	UFUNCTION(Category = "Perception")
 	void OnTargetPerceptionUpdated(AActor* _StimulusCauser, FAIStimulus _Stimulus);
+
+	// Event called when an actor is perceived by the perception component
+	UFUNCTION(BlueprintImplementableEvent, Category = "Perception")
+	void OnTargetActorPerceivedEvent(AActor* _TargetActor);
 
 // Member variables
 protected:
@@ -98,6 +102,6 @@ protected:
 	class UBehaviorTree* CurrentBehaviorTree;
 
 	// Current owner of the ai controller
-	UPROPERTY(Transient, SkipSerialization)
+	UPROPERTY(BlueprintReadOnly, Transient, SkipSerialization)
 	class ANWPCharacter* CurrentOwner;
 };

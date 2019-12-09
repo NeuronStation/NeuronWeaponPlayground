@@ -239,6 +239,25 @@ void UNWPAIPathComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 //
 ///////////////////////////////////////////////////////////////////////////
 
+void UNWPAIPathComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	ANWPAIController* AIController = CastChecked<ANWPAIController>(OwnerPawn->GetController());
+
+	// Try to move to the location until the movement is executed successfully
+	if (bIsWaypointBehaviorActive && MovingToWaypointIndex >=  0 && 
+		AIController->MoveToLocation(WaypointsPath[MovingToWaypointIndex]->GetActorLocation(), AcceptanceRadius, true) == EPathFollowingRequestResult::RequestSuccessful)
+	{
+		//PrimaryComponentTick.bCanEverTick = false;
+		SetComponentTickEnabled(false);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////
+
 void UNWPAIPathComponent::MoveToWaypointByIndex(int32 WaypointIndex)
 {
 	// Evaluate the move invariant and valid states
@@ -247,11 +266,21 @@ void UNWPAIPathComponent::MoveToWaypointByIndex(int32 WaypointIndex)
 		return;
 	}
 
+	// NOTE: [NWP-REVIEW] This function could be called within a context in which OwnerPawn is not valid like the first ANWPAIController::OnPossess
+	// Access the owner pawn directly rather than through the cached variable
+	APawn* LocalOwnerPawn = CastChecked<APawn>(GetOwner());
+	ANWPAIController* AIController = CastChecked<ANWPAIController>(LocalOwnerPawn->GetController());
+
 	// Move the pawn to the actor location
 	// NOTE: [NWP-REVIEW] It seems that MoveToActor requires the other actor to have a collider. If the other actor does not have it, the pawn starts to move in circles.
 	// That behavior does not appear using MoveToLocation.
-	ANWPAIController* AIController = CastChecked<ANWPAIController>(OwnerPawn->GetController());
-	AIController->MoveToLocation(WaypointsPath[WaypointIndex]->GetActorLocation(), AcceptanceRadius, true);
+	// NOTE2: [NWP-REVIEW] MoveToLocation fails when called from ANWPAIController::OnPossess the first time it is possessed. Start ticking until the 
+	// movement is executed correctly
+	if (AIController->MoveToLocation(WaypointsPath[WaypointIndex]->GetActorLocation(), AcceptanceRadius, true) == EPathFollowingRequestResult::Failed)
+	{
+		PrimaryComponentTick.bCanEverTick = true; 
+		SetComponentTickEnabled(true);
+	}
 
 	// Other potential ways of moving the pawn --------------------------
 	//UAITask_MoveTo::AIMoveTo(AIController, FVector::ZeroVector, GetNextWaypoint(), AcceptanceRadius);

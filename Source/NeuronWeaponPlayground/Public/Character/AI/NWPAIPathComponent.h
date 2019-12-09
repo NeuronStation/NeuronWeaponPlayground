@@ -83,7 +83,10 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Ends gameplay for this component
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	// Function called every frame on this ActorComponent. Override this function to implement custom logic to be executed every frame
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	/// UActorComponent interface end
 
 	// Moves to a waypoint by index

@@ -18,7 +18,6 @@
 DEFINE_LOG_CATEGORY(LogNWPAIController);
 
 // Constants
-const FName ANWPAIController::IsFollowerLabel(TEXT("IsFollower"));
 const FName ANWPAIController::HasSightLabel(TEXT("HasSight"));
 const FName ANWPAIController::TargetActorLabel(TEXT("TargetActor"));
 
@@ -162,8 +161,12 @@ void ANWPAIController::StartBehaviouTree(class UBehaviorTree* _BehaviorTreeToSta
 	}
 
 	// Run & cache the behavior tree
+	UBehaviorTree* PreviousBehaviorTree = CurrentBehaviorTree;
 	RunBehaviorTree(_BehaviorTreeToStart);
 	CurrentBehaviorTree = _BehaviorTreeToStart;
+
+	// Execute the behavior tree change event
+	OnBehaviorTreeChanged(PreviousBehaviorTree, CurrentBehaviorTree);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -186,21 +189,8 @@ void ANWPAIController::StopBehaviorTree()
 
 void ANWPAIController::BuildBlackboard(class UNWPAIConfigurationComponent* _AIConfigurationComponent)
 {
-	UpdateIsFollowerKey(_AIConfigurationComponent->IsFollower());
 	UpdateHasSightKey(false);
 	UpdateTargetActorKey(nullptr);
-}
-
-///////////////////////////////////////////////////////////////////////////
-//
-///////////////////////////////////////////////////////////////////////////
-
-void ANWPAIController::UpdateIsFollowerKey(bool _bIsFollower)
-{
-	if (Blackboard)
-	{
-		Blackboard->SetValueAsBool(IsFollowerLabel, _bIsFollower);
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -244,9 +234,11 @@ void ANWPAIController::OnTargetPerceptionUpdated(AActor* _StimulusCauser, FAISti
 		*UKismetSystemLibrary::GetDisplayName(_StimulusCauser));
 
 	// Check if the perceived actor is a character
-	if (_StimulusCauser->IsA<ANWPCharacter>())
-	{
+	//if (_StimulusCauser->IsA<ANWPCharacter>())
+	//{
 		UpdateHasSightKey(true);
 		UpdateTargetActorKey(_StimulusCauser);
-	}
+
+		OnTargetActorPerceivedEvent(_StimulusCauser);
+	//}
 }

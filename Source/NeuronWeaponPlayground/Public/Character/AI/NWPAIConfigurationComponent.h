@@ -29,17 +29,10 @@ public:
 		return CompatibleCharacterBehaviorTree.Contains(CharacterBehaviorTree);
 	}
 
-	// Returns if the ai is a follower
-	FORCEINLINE bool IsFollower() const { return bIsFollower; }
-
 // Member variables
 protected:
 
 	// Indicates the behavior trees compatible with the ai
 	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	TSet<class UBehaviorTree*> CompatibleCharacterBehaviorTree;
-
-	// Indicates if the ai is a follower
-	UPROPERTY(EditAnywhere, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	bool bIsFollower;
 };

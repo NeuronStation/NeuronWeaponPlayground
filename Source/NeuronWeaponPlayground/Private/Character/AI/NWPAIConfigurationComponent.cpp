@@ -8,8 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 UNWPAIConfigurationComponent::UNWPAIConfigurationComponent(const class FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer),
-	bIsFollower(false)
+	Super(ObjectInitializer)
 {
 
 }
