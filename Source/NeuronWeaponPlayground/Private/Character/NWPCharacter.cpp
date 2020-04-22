@@ -37,7 +37,7 @@ ANWPCharacter::ANWPCharacter(const class FObjectInitializer& ObjectInitializer) 
 	// Create a CameraComponent	
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCameraComponent"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FirstPersonCameraComponent->RelativeLocation = FVector(-39.56f, 1.75f, 64.0f); // Position the camera
+	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.0f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
 	// Create a mesh component that will be used when being viewed from a first person view (when controlling this pawn)
@@ -46,8 +46,8 @@ ANWPCharacter::ANWPCharacter(const class FObjectInitializer& ObjectInitializer) 
 	FirstPersonMeshComponent->SetupAttachment(FirstPersonCameraComponent);
 	FirstPersonMeshComponent->bCastDynamicShadow = false;
 	FirstPersonMeshComponent->CastShadow = false;
-	FirstPersonMeshComponent->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
-	FirstPersonMeshComponent->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+	FirstPersonMeshComponent->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
+	FirstPersonMeshComponent->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
 }
 
 ///////////////////////////////////////////////////////////////////////////
