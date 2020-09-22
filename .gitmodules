@@ -1,0 +1,3 @@
+[submodule "Plugins/NeuronFramework"]
+	path = Plugins/NeuronFramework
+	url = ../NeuronFramework.git
